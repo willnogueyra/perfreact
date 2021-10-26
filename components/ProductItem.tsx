@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 interface ProductItemProps {
   product: {
     id: number;
@@ -6,7 +8,7 @@ interface ProductItemProps {
   }
 }
 
-export function ProductItem({ product }: ProductItemProps) {
+export function ProductItemComponent({ product }: ProductItemProps) {
   return (
     <div>
       {product.title} - <strong>{product.price}</strong>
@@ -14,3 +16,10 @@ export function ProductItem({ product }: ProductItemProps) {
   );
 }
 
+export const ProductItem = memo(ProductItemComponent, (prevProps, nextProps) => {
+	return Object.is(prevProps.product, nextProps.product)
+})
+
+// shallow compare -> comparação rasa
+// {} === {} -> no javascript quando comparamos dois objetos sempre retorna false;
+// igualdade referencial
